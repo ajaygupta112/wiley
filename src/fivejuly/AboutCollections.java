@@ -1,9 +1,8 @@
-// Collections - class, defines all the commonly used utility methods
+package fivejuly;// Collections - class, defines all the commonly used utility methods
 // Collection - interface
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Iterable
@@ -11,7 +10,7 @@ import java.util.List;
         * List - preserves the order of insertion
             * Vector - synchronised list, deprecated, for  multithreaded env
             * ArrayList - stores data in array, array type will object
-            * LinkedList
+            * fivejuly.LinkedList
         * Set
         * Queue
  * Map

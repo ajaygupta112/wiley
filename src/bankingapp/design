@@ -1,0 +1,19 @@
+Banking application
+    User
+        -Add, edit, delete user
+        -Save user details - name, address, contact
+        -Assign account number to user
+        -fetch user details
+        -fetch bank balance
+        -should be able to transact- add or withdraw money
+
+    Bank Account
+        -Type of bank account(Savings/Current)
+        -Save bank balance of each user
+        -Total transaction history of an user
+        -Open or close account of a user
+        -fetch the bank balance of a user
+
+    Transactions
+        -User should be able to do transactions - add or withdraw money
+        -Check history of last 10 transactions(mini-statement)

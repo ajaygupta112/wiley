@@ -1,3 +1,5 @@
+package fivejuly;
+
 public class LinkedList
 {
     Node top;

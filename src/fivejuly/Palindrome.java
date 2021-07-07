@@ -1,3 +1,5 @@
+package fivejuly;
+
 import java.util.ArrayList;
 
 public class Palindrome
