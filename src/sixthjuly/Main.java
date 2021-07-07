@@ -30,17 +30,9 @@ public class Main
         pm.put(p1,employees);
         //int sum = pm.get(p1).stream().mapToInt(emp->(int)emp.salary).sum();
         double sum = 0;
-        List<Employee> updatedList = pm.get(p1).stream()
+        /*List<Employee> updatedList = */pm.get(p1).stream()
                                         .sorted((e1,e2)->(int)(e2.salary - e1.salary))
-                                        .filter(emp->{double sum1 = 0;
-                                                    if(sum1 + emp.salary <= p1.budget)
-                                                    {
-                                                        sum1 += emp.salary;
-                                                        return true;
-                                                    }
-                                                    return false;})
-                                        .collect(Collectors.toList());
-
+                                        .forEach(emp->System.out.println(emp.id+ " "+emp.salary + " "));
 /*
         List<Employee> employees = new ArrayList<>();
         //employees.add();
