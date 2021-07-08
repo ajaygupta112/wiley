@@ -10,7 +10,8 @@ public class UserSet
     {
         //Set<Type> customSet = new TreeSet<>(new TypeSortInteger());
         //Set<Type> customSet = new TreeSet<>(new TypeSortString());
-        Set<Type> customSet = new TreeSet<>(new TypeSortAllString());
+        //Set<Type> customSet = new TreeSet<>(new TypeSortAllString());
+        Set<Type> customSet = new TreeSet<>(new TypeSort(SortMethod.ALL_STRING));
 
         customSet.add(new Type(new Integer(10)));
         customSet.add(new Type("Elephant"));
@@ -24,10 +25,7 @@ public class UserSet
 
         customSet.add(new Type(new Integer(2)));
 
-        /*customSet.add(new Type(null));
-        customSet.add(new Type(null));
-
-        customSet.add(null);*/
+        //customSet.add(null);
         customSet.add(new Type(new User(1,"Ajay")));
         customSet.add(new Type(new User(3,"User3")));
         customSet.add(new Type(new User(5,"User5")));
@@ -37,7 +35,107 @@ public class UserSet
     }
 }
 
-class TypeSortAllString implements  Comparator<Type>
+enum SortMethod
+{
+    INTEGER,
+    STRING,
+    ALL_STRING
+}
+
+class TypeSort implements  Comparator<Type>
+{
+    SortMethod sortMethod;
+
+    public TypeSort(SortMethod sortMethod)
+    {
+        this.sortMethod = sortMethod;
+    }
+
+    @Override
+    public int compare(Type o1, Type o2) {
+        if(this.sortMethod == SortMethod.INTEGER)
+            return compareByID(o1,o2);
+        else if(this.sortMethod == SortMethod.STRING)
+            return compareByString(o1, o2);
+        else
+            return compareByAllString(o1, o2);
+    }
+
+    private int compareByID(Type o1, Type o2)
+    {
+        return 0;
+    }
+
+    private int compareByString(Type o1, Type o2)
+    {
+        return 0;
+    }
+
+    private int compareByAllString(Type o1, Type o2)
+    {
+        if(o1.object instanceof String)
+        {
+            if(o2.object instanceof String)
+            {
+                return compare(o1.object.toString(), o2.object.toString());
+            }
+            else if(o2.object instanceof User)
+            {
+                return compare(o1.object.toString(), ((User) o2.object).getName());
+            }
+            else
+                return -1;
+        }
+        else if(o1.object instanceof Integer)
+        {
+            if(o2.object instanceof Integer)
+            {
+                return compare((int)o1.object, (int)o2.object);
+            }
+            return 1;
+        }
+        else if(o1.object instanceof User)
+        {
+            if(o2.object instanceof User)
+            {
+                return compareByUserName((User) o1.object, (User) o2.object);
+            }
+            else if(o2.object instanceof String)
+            {
+                return compare(((User) o1.object).getName(), o2.object.toString());
+            }
+            else
+                return -1;
+        }
+        return 0;
+    }
+
+    private  int compareByUserId(User o1, User o2)
+    {
+        int n1 = o1.getId();
+        int n2 = o2.getId();
+        return compare(n1, n2);
+    }
+
+    private int compareByUserName(User o1, User o2)
+    {
+        String s1 = o1.getName();
+        String s2 = o2.getName();
+        return compare(s1, s2);
+    }
+    private int compare(int n1, int n2)
+    {
+        return n1 - n2;
+    }
+
+    private int compare(String str1, String str2)
+    {
+        return str1.compareTo(str2);
+    }
+}
+
+/*
+class TypeSortAllString implements Comparator<Type>
 {
     @Override
     public int compare(Type o1, Type o2)
@@ -90,7 +188,7 @@ class TypeSortAllString implements  Comparator<Type>
     }
 }
 
-class TypeSortInteger implements  Comparator<Type>
+class TypeSortInteger implements Comparator<Type>
 {
     @Override
     public int compare(Type o1, Type o2)
@@ -132,8 +230,9 @@ class TypeSortInteger implements  Comparator<Type>
     }
 }
 
-class TypeSortString implements  Comparator<Type>
+class TypeSortString implements Comparator<Type>
 {
+
     @Override
     public int compare(Type o1, Type o2)
     {
@@ -173,10 +272,11 @@ class TypeSortString implements  Comparator<Type>
         return 0;
     }
 }
+*/
 
-class Type //implements Comparable<Type>
+class Type
 {
-    Object object; // int // string // user -- expected sort : 1,2,Hello,Hi, User{1,"User1"}, User{2,"User2"}
+    Object object;
 
     public Type(){
 
@@ -209,34 +309,8 @@ class Type //implements Comparable<Type>
         return super.equals(obj);
     }
 
-    /*@Override
-    public int compareTo(Type next) {
-        // handle null values at the beginning
-        if(this.object == null || next.object == null){
-            return -1;
-        }
-        if(this.object instanceof Integer){
-            if(next.object instanceof Integer){
-                int i = (int)next.object;
-                int j = (int)this.object;
-                return j - i;
-            }else if(next.object instanceof String){
-                return -1;
-            }
-            return 0;
-        }else if(this.object instanceof String){
-            if(next.object instanceof String){
-                String str1 = (String)this.object;
-                String str2 = (String)next.object;
-                return str1.compareTo(str2);
-            }else if(next.object instanceof Integer){
-                return 1;
-            }
-            return 0;
-        }
-        return 0;
-    }*/
 }
+
 class User {
     private int id;
     private String name;

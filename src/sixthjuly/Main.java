@@ -26,6 +26,12 @@ public class Main
                                     .map(user-> new Employee(user.id, user.name, ((Employee)user).salary,((Employee)user).address))
                                     .collect(Collectors.toList());
 
+        /*
+        List<Employee1>emp=users.stream().filter(u->u instanceof Employee1).map(u->(Employee1)u).collect(Collectors.toList());
+	List<Employee1>emp1=users.stream().filter(u->u instanceof Employee1).map(Employee::new).collect(Collectors.toList());
+
+         */
+
         Map<Project, List<Employee>> pm = new HashMap<>();
         pm.put(p1,employees);
         //int sum = pm.get(p1).stream().mapToInt(emp->(int)emp.salary).sum();
