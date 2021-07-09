@@ -9,8 +9,7 @@ public class Bank
     public static List<Account> accounts = new ArrayList<>();
     public static void main(String[] args)
     {
-
-        accounts.add(new Account("abc","ghaziabad",123456789));
+    /*    accounts.add(new Account("abc","ghaziabad",123456789));
         accounts.add(new Account("xyz","pune",234567891));
         accounts.add(new Account("gef","pune",345678912));
         accounts.add(new Account("pqr","mumbai",456789123));
@@ -35,6 +34,7 @@ public class Bank
         //accounts.stream().filter(acc->acc.getBalance()>0).forEach(o->System.out.println(o +"\n"+ o.getAllTransactions() + "\n"));
         accounts.stream().filter(acc->acc.getBalance()>10000).forEach(System.out::println);
 
+*/
         while(true)
         {
             System.out.println("Choose the option");
@@ -59,9 +59,9 @@ public class Bank
                         break;
                 case 4: fetchAccountBalance();
                         break;
-                case 5: printStatement(0);
+                case 5: printStatement(10);
                         break;
-                case 6: printStatement(1);
+                case 6: printStatement(0);
                         break;
                 case 7: fetchUserDetails();
                         break;
