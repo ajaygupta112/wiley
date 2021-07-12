@@ -39,6 +39,18 @@ public class Main
         userMap.put(obj1,userTwoAddress);
         userMap.put(obj2,userThreeAddress);
 
+
+        for(Map.Entry<User, List<Address>> e : userMap.entrySet())
+        {
+            User user = e.getKey();
+            List<Address> adrs = e.getValue();
+            System.out.print(user + " ");
+            adrs.forEach(System.out::print);
+            System.out.println();
+        }
+
+        System.out.println();
+
         Set<Address> addressSet = userMap.values().stream().flatMap(Collection::stream).collect(Collectors.toSet());
         //addressSet.forEach(System.out::println);
         Map<Address, List<User>> addressMap = new TreeMap<>((u1,u2)->{if(u2.count - u1.count != 0)
@@ -63,7 +75,6 @@ public class Main
             }
             adrs.count = temp.size();
             addressMap.put(adrs,temp.stream().sorted(Comparator.comparingInt(user -> user.id)).collect(Collectors.toList()));
-
         }
 
         for(Map.Entry<Address, List<User>> e : addressMap.entrySet())
