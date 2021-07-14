@@ -1,15 +1,18 @@
 package bankingapp;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Bank
 {
     private List<Account> accounts;
+    TreeMap<Integer, Integer> currency = new TreeMap<>((a,b)->b - a);
 
     Bank()
     {
+        currency.put(100, 10);
+        currency.put(50, 10);
+        currency.put(10, 10);
         accounts = new ArrayList<>();
     }
 
@@ -42,7 +45,17 @@ public class Bank
 
 */
         Bank bank = new Bank();
-        while(true)
+        String ans = bank.chooseDenomination(210);
+        System.out.println(ans);
+        System.out.println(bank.chooseDenomination(360));
+        System.out.println(bank.chooseDenomination(200));
+        System.out.println(bank.chooseDenomination(440));
+        System.out.println(bank.totalAvailableAmount());
+        System.out.println(bank.chooseDenomination(130));
+        System.out.println(bank.chooseDenomination(100));
+        System.out.println(bank.totalAvailableAmount());
+        System.out.println(bank.chooseDenomination(160));
+        /*while(true)
         {
             System.out.println("Choose the option");
             System.out.println("1. Create a Bank Account");
@@ -76,7 +89,7 @@ public class Bank
                         break;
                 case 9: System.exit(1);
             }
-        }
+        }*/
     }
 
     public void addCustomer()
@@ -115,5 +128,72 @@ public class Bank
     public void closeBankAccount()
     {
 
+    }
+
+    private void addCurrency(int denomination, int count)
+    {
+        if(!currency.containsKey(denomination))
+            currency.put(denomination,count);
+        else
+            currency.put(denomination, currency.get(denomination) + count);
+    }
+
+    private int totalAvailableAmount()
+    {
+        int sum = 0;
+        for(Map.Entry<Integer, Integer> e: currency.entrySet())
+            sum += e.getKey()*e.getValue();
+        return sum;
+    }
+
+    private String chooseDenomination(int amount)
+    {
+        int temp = amount;
+        if(amount % currency.lastEntry().getKey() != 0)
+            return "Enter balance in the multiple of " + currency.lastKey();
+        if(amount > totalAvailableAmount())
+            return "Available balance in the bank is less than the requested amount";
+
+        String ans = "";
+        TreeMap<Integer, Integer> denominationUsed = new TreeMap<>((a,b)->b - a);
+
+        //while(amount > 0)
+        //{
+            for(int i : currency.keySet())
+            {
+                //System.out.println("Here");
+                if(currency.get(i) > 0 && amount > 0)
+                {
+                    if(amount/i <= currency.get(i))
+                    {
+                        currency.put(i, currency.get(i) - amount/i);
+                        denominationUsed.put(i, amount/i);
+                        //System.out.println(i + " "  + amount/i);
+                        amount -= i*(amount / i);
+                    }
+                    else
+                    {
+                        denominationUsed.put(i, currency.get(i));
+                        amount -= i*currency.get(i);
+                        currency.put(i, 0);
+                    }
+                }
+            }
+        //}
+
+        if(amount != 0)
+            return "Denomination not available for " + temp;
+        int count = 1;
+        for(int i : denominationUsed.keySet())
+        {
+            if(denominationUsed.get(i) > 0)
+            {
+                ans += i + "*" + denominationUsed.get(i);
+                if(count < denominationUsed.size())
+                    ans += " + ";
+            }
+            count++;
+        }
+        return ans;
     }
 }
