@@ -7,7 +7,7 @@ public class Account
 {
     private static int last_id = 0;
     private final int id;
-    private double balance;
+    private long balance;
     private Customer customer;
     private List<Transaction> transactions;
 
@@ -24,12 +24,12 @@ public class Account
         return this.id;
     }
 
-    private void updateBalance(double balance)
+    private void updateBalance(long balance)
     {
         this.balance = balance;
     }
 
-    public double getBalance()
+    public long getBalance()
     {
         return this.balance;
     }
@@ -39,7 +39,7 @@ public class Account
         return this.customer;
     }
 
-    public boolean withdrawMoney(double amount)
+    public boolean withdrawMoney(long amount)
     {
         if(amount > this.balance)
             return false;
@@ -48,11 +48,10 @@ public class Account
         return true;
     }
 
-    public boolean depositMoney(double amount)
+    public void depositMoney(long amount)
     {
         updateBalance(this.balance + amount);
         addTransaction("CREDIT", amount);
-        return true;
     }
 
     public List<Transaction> getAllTransactions()

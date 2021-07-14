@@ -1,6 +1,6 @@
 Banking application
 
-We want to build a banking application which will allow users to create account, transact using that account and fetch details fo their account
+We want to build a banking application which will allow users to create account, transact using that account and fetch details of their account
     User
         -Add, edit, delete user
         -Save user details - name, address, contact
@@ -11,6 +11,7 @@ We want to build a banking application which will allow users to create account,
         -fetch average account balance among accounts
         -fetch all accounts having balance > 10000
         -fetch all account having address "pune"
+
     Bank Account
         -Type of bank account(Savings/Current)
         -Save bank balance of each user
@@ -21,4 +22,4 @@ We want to build a banking application which will allow users to create account,
     Transactions
         -User should be able to do transactions - add or withdraw money
         -Check history of last 10 transactions(mini-statement)
-
+        - add denomination selection system - first fit and best fit

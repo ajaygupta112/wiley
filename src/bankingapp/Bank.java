@@ -1,7 +1,6 @@
 package bankingapp;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Bank
 {
@@ -16,159 +15,130 @@ public class Bank
         accounts = new ArrayList<>();
     }
 
-    public static void main(String[] args)
+    public List<Account> getAllAccounts()
     {
-    /*    accounts.add(new Account("abc","ghaziabad",123456789));
-        accounts.add(new Account("xyz","pune",234567891));
-        accounts.add(new Account("gef","pune",345678912));
-        accounts.add(new Account("pqr","mumbai",456789123));
-        accounts.add(new Account("abc","ghaziabad",567891234));
-
-        accounts.get(0).depositMoney(10000);
-        accounts.get(0).depositMoney(10000);
-        accounts.get(0).withdrawMoney(2303);
-
-        accounts.get(1).depositMoney(10000);
-        accounts.get(1).depositMoney(10000);
-        accounts.get(1).withdrawMoney(2303);
-
-        accounts.get(2).depositMoney(10000);
-        accounts.get(3).depositMoney(10000);
-        accounts.get(4).depositMoney(10000);
-
-        accounts.get(2).withdrawMoney(1000);
-        accounts.get(3).withdrawMoney(2000);
-        accounts.get(4).withdrawMoney(3000);
-
-        //accounts.stream().filter(acc->acc.getBalance()>0).forEach(o->System.out.println(o +"\n"+ o.getAllTransactions() + "\n"));
-        accounts.stream().filter(acc->acc.getBalance()>10000).forEach(System.out::println);
-
-*/
-        Bank bank = new Bank();
-        String ans = bank.chooseDenomination(210);
-        System.out.println(ans);
-        System.out.println(bank.chooseDenomination(360));
-        System.out.println(bank.chooseDenomination(200));
-        System.out.println(bank.chooseDenomination(440));
-        System.out.println(bank.totalAvailableAmount());
-        System.out.println(bank.chooseDenomination(130));
-        System.out.println(bank.chooseDenomination(100));
-        System.out.println(bank.totalAvailableAmount());
-        System.out.println(bank.chooseDenomination(160));
-        /*while(true)
-        {
-            System.out.println("Choose the option");
-            System.out.println("1. Create a Bank Account");
-            System.out.println("2. Deposit Money");
-            System.out.println("3. Withdraw Money");
-            System.out.println("4. Fetch Account Balance");
-            System.out.println("5. Print Mini-statement");
-            System.out.println("6. Print all transaction history");
-            System.out.println("7. Print User details");
-            System.out.println("8. Close the Bank Account");
-            System.out.println("9. Exit the system");
-            Scanner input = new Scanner(System.in);
-            int x = input.nextInt();
-            switch(x)
-            {
-                case 1: bank.addCustomer();
-                    break;
-                case 2: bank.depositMoney();
-                        break;
-                case 3: bank.withdrawMoney();
-                        break;
-                case 4: bank.fetchAccountBalance();
-                        break;
-                case 5: bank.printStatement(10);
-                        break;
-                case 6: bank.printStatement(0);
-                        break;
-                case 7: bank.fetchUserDetails();
-                        break;
-                case 8: bank.closeBankAccount();
-                        break;
-                case 9: System.exit(1);
-            }
-        }*/
+        return accounts;
     }
-
     public void addCustomer()
     {
         Scanner in = new Scanner(System.in);
         System.out.println("Enter Customer Name : ");
+        String name = in.next();
         System.out.println("Enter Customer Address : ");
+        String address = in.nextLine();
         System.out.println("Enter Customer Contact Number : ");
+        long contact = in.nextLong();
+        Account account = new Account(name, address, contact);
+        accounts.add(account);
+        System.out.println("New Account created for customer " + name);
+        System.out.println("Note the account number for all future transactions : " + account.getId());
+        in.close();
     }
 
     public void depositMoney()
     {
-
+        int id = inputAccountNumber();
+        Account account = getAccountById(id);
+        if(account != null)
+        {
+            System.out.println("Enter the amount you want to deposit : ");
+            Scanner in = new Scanner(System.in);
+            long amount = in.nextLong();
+            in.close();
+            account.depositMoney(amount);
+            System.out.println("Amount deposited");
+            System.out.println("Updated balance is : " + account.getBalance());
+        }
+        else
+            System.out.println("Account does not exist, please try again");
     }
 
     public void withdrawMoney()
     {
+        int id = inputAccountNumber();
+        Account account = getAccountById(id);
+        if(account != null)
+        {
+            System.out.println("Enter the amount you want to withdraw : ");
+            Scanner in = new Scanner(System.in);
+            long amount = in.nextLong();
+            in.close();
+            boolean action = account.withdrawMoney(amount);
+            if(action)
+            {
+                System.out.println("Amount withdrawal completed : " + chooseDenomination(amount));
+                System.out.println("Updated balance is : " + account.getBalance());
+            }
+            else
+                System.out.println("Not enough balance in your account");
+        }
+        else
+            System.out.println("Account does not exist, please try again");
 
     }
 
     public void fetchAccountBalance()
     {
-
+        int id = inputAccountNumber();
+        Account account = getAccountById(id);
+        if(account != null)
+            System.out.println("Available balance is : " + account.getBalance());
+        else
+            System.out.println("Account does not exist, please try again");
     }
 
     public void printStatement(int i)
     {
-
+        int id = inputAccountNumber();
+        Account account = getAccountById(id);
+        if(account != null)
+        {
+            if(i == 0)
+                System.out.println(account.getAllTransactions());
+            else
+                System.out.println(account.getLastTenTransactions());
+        }
+        else
+            System.out.println("Account does not exist, please try again");
     }
 
     public void fetchUserDetails()
     {
-
-    }
-
-    public void closeBankAccount()
-    {
-
-    }
-
-    private void addCurrency(int denomination, int count)
-    {
-        if(!currency.containsKey(denomination))
-            currency.put(denomination,count);
+        int id = inputAccountNumber();
+        Account account = getAccountById(id);
+        if(account != null)
+        {
+            System.out.println(account.getCustomer());
+        }
         else
-            currency.put(denomination, currency.get(denomination) + count);
+            System.out.println("Account does not exist, please try again");
     }
 
-    private int totalAvailableAmount()
+    /*public void closeBankAccount()
     {
-        int sum = 0;
-        for(Map.Entry<Integer, Integer> e: currency.entrySet())
-            sum += e.getKey()*e.getValue();
-        return sum;
-    }
+        int id = inputAccountNumber();
 
-    private String chooseDenomination(int amount)
+    }*/
+
+    public String chooseDenomination(long amount)
     {
-        int temp = amount;
+        long tempAmount = amount;
         if(amount % currency.lastEntry().getKey() != 0)
             return "Enter balance in the multiple of " + currency.lastKey();
         if(amount > totalAvailableAmount())
             return "Available balance in the bank is less than the requested amount";
-
         String ans = "";
         TreeMap<Integer, Integer> denominationUsed = new TreeMap<>((a,b)->b - a);
-
         //while(amount > 0)
         //{
             for(int i : currency.keySet())
             {
-                //System.out.println("Here");
                 if(currency.get(i) > 0 && amount > 0)
                 {
                     if(amount/i <= currency.get(i))
                     {
-                        currency.put(i, currency.get(i) - amount/i);
-                        denominationUsed.put(i, amount/i);
-                        //System.out.println(i + " "  + amount/i);
+                        currency.put(i, currency.get(i) - (int)amount/i);
+                        denominationUsed.put(i, (int)amount/i);
                         amount -= i*(amount / i);
                     }
                     else
@@ -180,9 +150,8 @@ public class Bank
                 }
             }
         //}
-
         if(amount != 0)
-            return "Denomination not available for " + temp;
+            return "Denomination not available for " + tempAmount;
         int count = 1;
         for(int i : denominationUsed.keySet())
         {
@@ -195,5 +164,33 @@ public class Bank
             count++;
         }
         return ans;
+    }
+
+    public long totalAvailableAmount()
+    {
+        long sum = 0;
+        for(Map.Entry<Integer, Integer> e: currency.entrySet())
+            sum += e.getKey()*e.getValue();
+        return sum;
+    }
+
+    public void addCurrency(int denomination, int count)
+    {
+        if(!currency.containsKey(denomination))
+            currency.put(denomination,count);
+        else
+            currency.put(denomination, currency.get(denomination) + count);
+    }
+
+    private int inputAccountNumber()
+    {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter the account number : ");
+        return input.nextInt();
+    }
+
+    private Account getAccountById(int id)
+    {
+        return accounts.stream().filter(acc -> acc.getId() == id).findAny().orElse(null);
     }
 }
