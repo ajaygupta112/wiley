@@ -7,25 +7,23 @@ public class MainClass
     public static void main(String[] args)throws Exception
     {
         /*Fibonacci fib = new Fibonacci(10);
-        Thread t1 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for(int i = 2 ; i <= 10 ; i++)
-                {
-                    fib.nextNum();
-                    fib.arr[i -1] = fib.sum;
-                    //System.out.print(fib.nextNum());
-                }
-            }
-        });
+        NextSum next = new NextSum(fib);
+        PrintSum print = new PrintSum(fib);
+
+        Thread t1 = new Thread(next);
+        Thread t2 = new Thread(print);
+
         t1.start();
-        Thread.sleep(100);
-        for(int i = 0 ; i < 10 ; i++)
+        t2.start();*/
+
+        //Thread.sleep(100);
+
+        /*for(int i = 0 ; i < 10 ; i++)
             System.out.println(fib.arr[i]);
         System.out.println(fib.sum);*/
 
 
-        User us1 = new User(1, "user1");
+        /*User us1 = new User(1, "user1");
         User us2 = new User(1, "user2");
 
         Project p1 = new Project(1,"p1");
@@ -64,7 +62,7 @@ public class MainClass
                     }
                 });
             }
-        });
+        });*/
 
 /*
 
