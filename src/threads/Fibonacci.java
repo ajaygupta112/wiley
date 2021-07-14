@@ -99,7 +99,6 @@ class PrintSum implements Runnable
     @Override
     public void run()
     {
-
         try
         {
             printSum();
