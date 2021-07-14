@@ -6,7 +6,13 @@ import java.util.Scanner;
 
 public class Bank
 {
-    public static List<Account> accounts = new ArrayList<>();
+    private List<Account> accounts;
+
+    Bank()
+    {
+        accounts = new ArrayList<>();
+    }
+
     public static void main(String[] args)
     {
     /*    accounts.add(new Account("abc","ghaziabad",123456789));
@@ -35,6 +41,7 @@ public class Bank
         accounts.stream().filter(acc->acc.getBalance()>10000).forEach(System.out::println);
 
 */
+        Bank bank = new Bank();
         while(true)
         {
             System.out.println("Choose the option");
@@ -51,58 +58,61 @@ public class Bank
             int x = input.nextInt();
             switch(x)
             {
-                case 1: addCustomer();
+                case 1: bank.addCustomer();
                     break;
-                case 2: depositMoney();
+                case 2: bank.depositMoney();
                         break;
-                case 3: withdrawMoney();
+                case 3: bank.withdrawMoney();
                         break;
-                case 4: fetchAccountBalance();
+                case 4: bank.fetchAccountBalance();
                         break;
-                case 5: printStatement(10);
+                case 5: bank.printStatement(10);
                         break;
-                case 6: printStatement(0);
+                case 6: bank.printStatement(0);
                         break;
-                case 7: fetchUserDetails();
+                case 7: bank.fetchUserDetails();
                         break;
-                case 8: closeBankAccount();
+                case 8: bank.closeBankAccount();
                         break;
                 case 9: System.exit(1);
             }
         }
     }
 
-    public static void addCustomer()
+    public void addCustomer()
+    {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter Customer Name : ");
+        System.out.println("Enter Customer Address : ");
+        System.out.println("Enter Customer Contact Number : ");
+    }
+
+    public void depositMoney()
     {
 
     }
 
-    public static void depositMoney()
+    public void withdrawMoney()
     {
 
     }
 
-    public static void withdrawMoney()
+    public void fetchAccountBalance()
     {
 
     }
 
-    public static void fetchAccountBalance()
+    public void printStatement(int i)
     {
 
     }
 
-    public static void printStatement(int i)
+    public void fetchUserDetails()
     {
 
     }
 
-    public static void fetchUserDetails()
-    {
-
-    }
-
-    public static  void closeBankAccount()
+    public void closeBankAccount()
     {
 
     }

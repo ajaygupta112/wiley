@@ -6,24 +6,8 @@ public class MainClass
 {
     public static void main(String[] args)throws Exception
     {
-        /*Fibonacci fib = new Fibonacci(10);
-        NextSum next = new NextSum(fib);
-        PrintSum print = new PrintSum(fib);
 
-        Thread t1 = new Thread(next);
-        Thread t2 = new Thread(print);
-
-        t1.start();
-        t2.start();*/
-
-        //Thread.sleep(100);
-
-        /*for(int i = 0 ; i < 10 ; i++)
-            System.out.println(fib.arr[i]);
-        System.out.println(fib.sum);*/
-
-
-        /*User us1 = new User(1, "user1");
+        User us1 = new User(1, "user1");
         User us2 = new User(1, "user2");
 
         Project p1 = new Project(1,"p1");
@@ -40,126 +24,134 @@ public class MainClass
         users.add(us1);
         users.add(us2);
 
-        TreeMap<UserProjects, Project> map = new TreeMap<>((u1,u2)->{if(u1.user.id != u2.user.id)
+        /*TreeMap<UserProjects, Project> map = new TreeMap<>((u1,u2)->{if(u1.user.id != u2.user.id)
             return u1.user.id - u2.user.id;
         else if(u1.user.name.compareTo(u2.user.name) != 0)
             return  u1.user.name.compareTo(u2.user.name);
             return u1.pid - u2.pid;
-        });
-
-        UserService obj = new UserService(users);
-
-        Thread t1 = new Thread(obj);
-        //Thread t2 = new Thread(obj);
-        Thread t3 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Thread t1 = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Map.Entry<UserProjects, Project> e = map.lastEntry();
-                        System.out.println(e.getKey() + ":" + e.getValue());
-                    }
-                });
-            }
         });*/
 
-/*
+        LinkedHashMap<UserProjects, Project> map = new LinkedHashMap<>();
+        AddUserProject add = new AddUserProject(users, map);
+        ReadUserProject read = new ReadUserProject(map);
 
-        EmpService empService = new EmpService();
+        Thread t1 = new Thread(add, "write");
+        Thread t2 = new Thread(read, "read");
 
-        Thread empThread1 = new Thread(empService);
+        t1.start();
+        t2.start();
 
-        Thread empThread2 = new Thread(empService);
+    }
+}
 
-        // start the thread
-        empThread1.start();
-        //Thread.sleep(1000);
-        //Thread.sleep(5);
-        empThread2.start();
-        Thread.sleep(100);
-        *//*try
+class AddUserProject implements Runnable
+{
+    //TreeMap<UserProjects, Project> map;
+    LinkedHashMap<UserProjects, Project> map;
+    List<User> list;
+    AddUserProject(List<User> list, LinkedHashMap<UserProjects, Project> map)
+    {
+        this.list = list;
+        this.map = map;
+    }
+
+    void addUser()throws InterruptedException
+    {
+        synchronized (map)
         {
-            Thread.sleep(1000);
+            for(User user :  list)
+            {
+                for(Project project : user.projects)
+                {
+                    while(UserProjects.readCount < UserProjects.addCount)
+                    {
+                        //System.out.println(Thread.currentThread().getName() + " in waiting");
+                        map.wait();
+                    }
+                    //System.out.println(Thread.currentThread().getName() + " running");
+                    UserProjects temp = new UserProjects(user, project.id);
+                    map.put(temp,project);
+                    UserProjects.addCount++;
+                    map.notifyAll();
+
+                }
+            }
+        }
+    }
+
+    @Override
+    public void run()
+    {
+        try
+        {
+            addUser();
         }
         catch(InterruptedException e)
         {
-            System.err.println("here");
-        }*//*
-
-        empService.getIntegers().forEach(in-> System.out.println("INT "+in));
-        System.out.println(empService.integers.size());*/
-    }
-}
-
-class UserService implements Runnable
-{
-    /*//TreeMap<UserProjects, Project> map = new TreeMap<>((u1,u2)->{if(u1.user.id != u2.user.id)
-        return u1.user.id - u2.user.id;
-    else if(u1.user.name.compareTo(u2.user.name) != 0)
-        return  u1.user.name.compareTo(u2.user.name);
-        return u1.pid - u2.pid;
-    });*/
-    List<User> list;
-    UserService(List<User> list)
-    {
-        this.list = list;
-    }
-    @Override
-    public void run()
-    {
-
-    }
-}
-
-class EmpService implements Runnable
-{
-    List<Integer> integers = new ArrayList<>();//Collections.emptyList();
-    int i = 100;
-    @Override
-    public void run()
-    {
-        //integers = new ArrayList<>();
-        for (; i > 0 ; i--)
-        {
-            /*try
-            {
-                Thread.sleep(i);
-            }
-            catch (InterruptedException inEx)
-            {
-                System.err.println(inEx);
-            }*/
-            if(!integers.contains(i))
-            {
-                integers.add(i);
-                System.out.println(Thread.currentThread().getName() + " ---- " + i);
-            }
+            System.out.println(e);
         }
-        try
+    }
+}
+
+class ReadUserProject implements Runnable
+{
+/*    TreeMap<UserProjects, Project> map;*/
+    LinkedHashMap<UserProjects, Project> map;
+    ReadUserProject(LinkedHashMap<UserProjects, Project> map)
+    {
+        this.map = map;
+    }
+
+    void readLastEntry()throws InterruptedException
+    {
+        synchronized (map)
         {
+            while(UserProjects.addCount == UserProjects.readCount)
+            {
+                //System.out.println(Thread.currentThread().getName() + " in waiting");
+                map.wait();
+            }
             Thread.sleep(1000);
+            int count = 1;
+            for (Map.Entry<UserProjects, Project> it : map.entrySet())
+            {
+                if (count == map.size())
+                {
+                    System.out.println("Last Key-> "+it.getKey() + " " + "Last Value-> "+it.getValue());
+                    break;
+                }
+                count++;
+            }
+            UserProjects.readCount++;
+            //System.out.println(UserProjects.addCount + ":" + UserProjects.readCount);
+            map.notifyAll();
         }
-        catch (InterruptedException inEx)
-        {
-                System.err.println(inEx);
-        }
-
-            //System.out.println(Thread.currentThread().getName() + " ---- "+i);
-        //}
     }
-
-    public List<Integer> getIntegers()
+    @Override
+    public void run()
     {
-        return integers;
+        int n = 0;
+        while(n < 4)
+        {
+            try
+            {
+                readLastEntry();
+            }
+            catch(InterruptedException e)
+            {
+                System.out.println(e);
+            }
+            n++;
+        }
     }
 }
-
 
 class UserProjects
 {
     User user;
     int pid;
+    static int addCount = 0;
+    static int readCount = 0;
     UserProjects(User user, int id)
     {
         this.user = user;
@@ -169,9 +161,9 @@ class UserProjects
     @Override
     public String toString() {
         return "{" +
-                "userid=" + user.id +
-                "username=" + user.name +
-                ", pid=" + pid +
+                "userid = " + user.id +
+                "username = " + user.name +
+                ", pid = " + pid +
                 '}';
     }
 }
@@ -192,9 +184,9 @@ class User
     @Override
     public String toString() {
         return "{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", projects=" + projects +
+                "id = " + id +
+                ", name = '" + name + '\'' +
+                ", projects = " + projects +
                 '}';
     }
 }
@@ -212,8 +204,10 @@ class Project
     @Override
     public String toString() {
         return "{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "id = " + id +
+                ", name = '" + name + '\'' +
                 '}';
     }
 }
+
+

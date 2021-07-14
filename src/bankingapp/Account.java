@@ -13,9 +13,9 @@ public class Account
 
     public Account(String name, String address, long contact)
     {
+        this.customer = new Customer(name, address, contact);
         this.id = ++last_id;
         this.balance = 0;
-        this.customer = new Customer(name, address, contact);
         this.transactions = new ArrayList<>();
     }
 
