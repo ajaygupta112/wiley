@@ -38,6 +38,7 @@ public class DriverClass
 
         bank.getAllAccounts().stream().filter(acc->acc.getBalance()>0).forEach(o->System.out.println(o +"\n"+ o.getAllTransactions() + "\n"));
         bank.getAllAccounts().stream().filter(acc->acc.getBalance()>10000).forEach(System.out::println);
+
         String ans = bank.chooseDenomination(210);
         System.out.println(ans);
         System.out.println(bank.chooseDenomination(360));
