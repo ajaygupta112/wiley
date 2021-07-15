@@ -17,9 +17,6 @@ Bank service
         -fetch user details
         -fetch bank balance
         -should be able to transact- add or withdraw money
-        -fetch average account balance among accounts
-        -fetch all accounts having balance > 10000
-        -fetch all account having address "pune"
 
     Bank Account
         -Type of bank account(Savings/Current)
@@ -32,7 +29,7 @@ Bank service
         -Withdrawal
             -withdraw money from their bank account
             -select denomination selection system - first fit and best fit
-            -or provide denomination - first fit or best fit(using load factor)
+            -save denomination info- first fit or best fit(using load factor)
         -Deposit
             -details of person depositing the amount - name, phone number, date
             -details of denominations received by the bank from the customer
