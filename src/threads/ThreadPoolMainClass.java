@@ -89,6 +89,22 @@ public class ThreadPoolMainClass {
         }
         service.shutdown();
 
+        FutureTask<String> futureTask = new FutureTask<>(callService);
+
+        Thread t = new Thread(futureTask,"CallableFuture-1");
+        t.start();
+
+        try{
+            String futureResponse="";
+            if(futureTask.isDone()){
+                futureResponse = futureTask.get();
+            }
+
+            System.out.println("FUTURE RESPONSE :: "+futureResponse);
+        }catch (InterruptedException | ExecutionException ex){
+            ex.printStackTrace();
+        }
+
 /*        Future<String>  callFuture1 = service.submit(callService); // task 2
         // interrupt a running thread
         callFuture1.cancel(true);
