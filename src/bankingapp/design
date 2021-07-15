@@ -1,11 +1,20 @@
 Banking application
 
-We want to build a banking application which will allow users to create account, transact using that account and fetch details of their account
+We want to build a banking application which will allow users to create account, transact using that account and fetch
+details of their account
+
+Bank service
+        -ATM cards
+        -Interest rates according to bank balance
+        -Account opening/closure
+        -Transaction support
+        -Add money to the bank
+
     User
         -Add, edit, delete user
         -Save user details - name, address, contact
         -Assign account number to user
-        -fetch user details -  do this
+        -fetch user details
         -fetch bank balance
         -should be able to transact- add or withdraw money
         -fetch average account balance among accounts
@@ -19,7 +28,26 @@ We want to build a banking application which will allow users to create account,
         -Open or close account of a user
         -fetch the bank balance of a user
 
-    Transactions
-        -User should be able to do transactions - add or withdraw money
+    Transactions -User should be able to do transactions - add/withdraw/transfer money
+        -Withdrawal
+            -withdraw money from their bank account
+            -select denomination selection system - first fit and best fit
+            -or provide denomination - first fit or best fit(using load factor)
+        -Deposit
+            -details of person depositing the amount - name, phone number, date
+            -details of denominations received by the bank from the customer
+        -Transfer
+            -account to account money transfer
+        -History
+            -mini  statement - last 5 transaction
+            -total transaction history(including deposit, withdrawal, ATM, account transfers)
         -Check history of last 10 transactions(mini-statement)
-        - add denomination selection system - first fit and best fit
+
+    Concurrent transactions
+        -A bank has multiple windows for transaction providing the facility to create account, withdraw money, deposit
+        money, and get bank statement at the same time.
+        -Implement the same in the banking app.
+        -Concurrent operations:
+            -Deposit/withdraw from same accounts
+            -Deposit/withdraw from different accounts
+            -Create account while performing any of the above operations

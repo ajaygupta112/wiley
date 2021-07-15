@@ -14,7 +14,7 @@ public class DriverClass
 
     public void systemGeneratedData(Bank bank)
     {
-        bank.getAllAccounts().add(new Account("abc","ghaziabad",123456789));
+        /*bank.getAllAccounts().add(new Account("abc","ghaziabad",123456789));
         bank.getAllAccounts().add(new Account("xyz","pune",234567891));
         bank.getAllAccounts().add(new Account("gef","pune",345678912));
         bank.getAllAccounts().add(new Account("pqr","mumbai",456789123));
@@ -37,7 +37,7 @@ public class DriverClass
         bank.getAllAccounts().get(4).withdrawMoney(3000);
 
         bank.getAllAccounts().stream().filter(acc->acc.getBalance()>0).forEach(o->System.out.println(o +"\n"+ o.getAllTransactions() + "\n"));
-        bank.getAllAccounts().stream().filter(acc->acc.getBalance()>10000).forEach(System.out::println);
+        bank.getAllAccounts().stream().filter(acc->acc.getBalance()>10000).forEach(System.out::println);*/
 
         String ans = bank.chooseDenomination(210);
         System.out.println(ans);
@@ -48,7 +48,10 @@ public class DriverClass
         System.out.println(bank.chooseDenomination(130));
         System.out.println(bank.chooseDenomination(100));
         System.out.println(bank.totalAvailableAmount());
-        System.out.println(bank.chooseDenomination(160));
+        System.out.println(bank.totalAvailableAmount());
+        System.out.println(bank.chooseDenomination(80));
+        System.out.println(bank.chooseDenomination(200));
+
     }
 
     public void userGeneratedValues(Bank bank)
