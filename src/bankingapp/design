@@ -8,6 +8,8 @@ Bank service
         -Interest rates according to bank balance
         -Account opening/closure
         -Transaction support
+            -withdrawal/bank balance/mini-statement/denomination procedure/change pin/atm security/ via ATM only
+            -everything else except withdrawal via bank
         -Add money to the bank
 
     User
@@ -36,7 +38,7 @@ Bank service
         -Transfer
             -account to account money transfer
         -History
-            -mini  statement - last 5 transaction
+            -mini statement - last 5 transaction
             -total transaction history(including deposit, withdrawal, ATM, account transfers)
         -Check history of last 10 transactions(mini-statement)
 

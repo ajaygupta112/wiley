@@ -1,0 +1,15 @@
+Create a mini-database using java collections
+core functionalities
+    -Insert record/table
+    -Delete record/table
+    -Update record/table
+    -Search record/table
+
+Only one database will be created - multiple tables can be created having any number of rows
+
+Type of values supported - varchar(String), long, boolean
+Data structures to be used
+    -for storing table names - HashSet - make searching easier and store unique values
+    -for storing table data - <list of lists>
+        -fields - a class field storing type and value of a field
+        -
