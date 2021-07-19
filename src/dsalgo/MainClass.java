@@ -4,6 +4,7 @@ public class MainClass
 {
 	public static void main(String[] args)
 	{
+		System.out.println("*******LinkedList*******");
 		MyLinkedList list = new MyLinkedList();
 		list.insert(10);
 		list.insert(20);
@@ -13,5 +14,16 @@ public class MainClass
 		list.printList();
 		list.deleteValue(30);
 		list.deleteValue(55);
+
+		System.out.println("*******Stack********");
+		MyStack stack = new MyStack();
+		stack.push(10);
+		stack.push(20);
+		stack.pop();
+		stack.push(30);
+		stack.push(40);
+		stack.push(50);
+		stack.pop();
+		stack.printStack();
 	}
 }
