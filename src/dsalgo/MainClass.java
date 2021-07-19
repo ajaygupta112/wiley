@@ -35,5 +35,19 @@ public class MainClass
 		queue.enqueue(40);
 		queue.enqueue(50);
 		queue.printQueue();
+
+		System.out.println("******CircularQueue********");
+		MyCircularQueue cq = new MyCircularQueue();
+		cq.enqueue(10);
+		cq.enqueue(20);
+		cq.enqueue(30);
+		cq.enqueue(40);
+		cq.enqueue(50);
+		cq.dequeue();
+		cq.dequeue();
+		cq.displayQueue();
+		System.out.println();
+		cq.enqueue(70);
+		cq.displayQueue();
 	}
 }
