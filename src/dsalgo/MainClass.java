@@ -25,5 +25,15 @@ public class MainClass
 		stack.push(50);
 		stack.pop();
 		stack.printStack();
+
+		System.out.println("*****Queue*****");
+		MyQueue queue = new MyQueue();
+		queue.enqueue(10);
+		queue.enqueue(20);
+		queue.enqueue(30);
+		queue.dequeue();
+		queue.enqueue(40);
+		queue.enqueue(50);
+		queue.printQueue();
 	}
 }
