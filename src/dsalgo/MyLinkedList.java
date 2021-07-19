@@ -62,7 +62,7 @@ public class MyLinkedList
 			if(temp != null)
 			{
 				prev.next = temp.next;
-				System.out.println(data + "deleted");
+				System.out.println(data + " deleted");
 			}
 			else
 				System.out.println(data +" not found");
