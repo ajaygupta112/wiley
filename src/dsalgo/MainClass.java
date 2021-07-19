@@ -49,5 +49,17 @@ public class MainClass
 		System.out.println();
 		cq.enqueue(70);
 		cq.displayQueue();
+
+		System.out.println("*****Priority Queue*******");
+		PriorityQueue pq = new PriorityQueue();
+		pq.enqueue(10);
+		pq.enqueue(6);
+		pq.enqueue(20);
+		pq.enqueue(25);
+		pq.enqueue(7);
+		pq.enqueue(13);
+		pq.dequeue();
+		pq.dequeue();
+		pq.printQueue();
 	}
 }
