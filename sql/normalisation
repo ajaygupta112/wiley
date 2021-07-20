@@ -8,5 +8,27 @@ Project - Id, company, project, cost_incurred_in_project
 2NF
 Employee - Id, name, pid
 Company - id, company
-Project - id, companyid, project, cost_incurred_in_project
+Project - id, company_id, project, cost_incurred_in_project
 
+
+
+Ecommerce database
+
+Customer - id(primary key), first_name, last_name, address, phone(unique), email(unique)
+
+Product - id(primary key), sku(unique), name, brand_id, category_id(foreign key referencing category table), price,
+stock_available, total_sold, status
+
+category - id(primary key), name, status
+
+brand - id(primary key), brand name, status
+
+cart - id(primary key), customer_id(unique), total
+
+cart details - id(primary key), cart_id(foreign key referencing from cart table), product_id(foreign key referencing to
+product table)
+
+order - id(primary key), customer_id(foreign key referencing from customer table), total amount, order date, delivery
+date,
+
+order details - id(primary key), order_id(foreign key referencing from order table), product id, sku, name, brand, category, price
