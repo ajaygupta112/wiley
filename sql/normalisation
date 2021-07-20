@@ -1,0 +1,12 @@
+Given:
+Employee - Id, name, company, project, cost_incurred_in_project
+
+1NF
+Employee - Id, name, pid
+Project - Id, company, project, cost_incurred_in_project
+
+2NF
+Employee - Id, name, pid
+Company - id, company
+Project - id, companyid, project, cost_incurred_in_project
+
